@@ -1,0 +1,42 @@
+version: '3.9'
+name: 'projekakso'
+
+services:
+  web:
+    image: nginx:1.25
+    ports:
+      - "8099:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+    networks:
+      - web_network
+      - bridge_network
+
+  db:
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - db_logs:/var/log/postgresql
+    networks:
+      - web_network
+      - bridge_network
+    configs:
+      - source: postgres_config
+        target: /etc/postgresql/pg_hba.conf
+
+volumes:
+  db_data:
+  db_logs:
+
+networks:
+  web_network:
+  bridge_network:
+    driver: bridge
+
+configs:
+  postgres_config:
+    file: ./pg_hba.conf
