@@ -1,2 +1,2 @@
 # ProjekUAS-AKSO
-Tugas UAS Projek Akso 
+Tugas UAS Projek Akso dengan menggunakan docker-compose.yml
